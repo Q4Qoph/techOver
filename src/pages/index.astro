@@ -1,17 +1,78 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import PricingCard from '../components/PricingCard.astro';
+import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Fast Web Solutions for Kenyan SMEs">
+  <Navbar />
+  
+  <main class="flex-grow pt-16">
+    <Hero />
+
+    {/* Pain Points vs Solution */}
+    <section class="py-20 bg-white" id="services">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-slate-900 mb-12">The Old Way vs. The techover.pro Way</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="p-8 bg-red-50 rounded-2xl border border-red-100">
+            <h3 class="text-xl font-bold text-red-900 mb-4">Relying ONLY on Social Media</h3>
+            <ul class="space-y-3 text-red-800">
+              <li>❌ Slow, manual DM replies lose hot leads</li>
+              <li>❌ Zero visibility on Google Search</li>
+              <li>❌ Customers must wait for manual payment details</li>
+              <li>❌ Unprofessional "link-in-bio" limits trust</li>
+            </ul>
+          </div>
+          <div class="p-8 bg-green-50 rounded-2xl border border-green-100">
+            <h3 class="text-xl font-bold text-green-900 mb-4">Custom Web Solution</h3>
+            <ul class="space-y-3 text-green-800">
+              <li>✅ 24/7 automated sales and lead capture</li>
+              <li>✅ Rank on Google for local SME searches</li>
+              <li>✅ Instant M-Pesa / WhatsApp checkout workflows</li>
+              <li>✅ Maximum credibility and premium brand feel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Pricing Grid */}
+    <section class="py-20 bg-slate-50" id="pricing">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-slate-900">Transparent Pricing for Kenyan Businesses</h2>
+          <p class="mt-4 text-gray-600">No hidden fees. Just high-performance code that drives sales.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <PricingCard 
+            tier="Starter SME Page" price="25,000" description="Perfect for service businesses establishing a fast online presence."
+            features={["Lightning-Fast Single Page", "Direct WhatsApp Integration", "Basic SEO Setup", "Mobile-First Design", "Cloudflare Hosting"]} 
+          />
+          <PricingCard 
+            tier="Growth E-Commerce" price="55,000" description="For businesses selling products that need automated payments." isPopular={true}
+            features={["Multi-Page Catalog", "M-Pesa STK Push Integration", "Automated Lead Capture", "Advanced Technical SEO", "Inventory Dashboard setup"]} 
+          />
+          <PricingCard 
+            tier="Custom Web App" price="85,000+" description="Full-stack solutions for unique operational workflows."
+            features={["Custom Database Architecture", "Admin Portal Workflow", "Third-party API Integrations", "User Authentication", "Scalable Edge Deployment"]} 
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {/* Footer */}
+  <footer class="bg-slate-900 py-12 text-center text-slate-400">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="font-bold text-white text-xl mb-4">techover<span class="text-blue-500">.pro</span></p>
+      <p class="mb-2">📍 Nairobi / Mombasa, Kenya 🇰🇪</p>
+      <p class="mb-8">Built by Fredie | SME Web Solutions | TikTok: @fredie.websolution</p>
+      <p class="text-sm">© {new Date().getFullYear()} techover.pro. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <WhatsAppFloatingCTA />
+</BaseLayout>
