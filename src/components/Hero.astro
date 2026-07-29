@@ -1,23 +1,31 @@
 ---
 ---
-<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-8">
+<section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative">
+  {/* Glowing speed badge */}
+  <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-100 text-xs md:text-sm font-semibold mb-10 shadow-[0_4px_20px_rgba(0,0,0,0.15),0_0_12px_rgba(59,130,246,0.25)] backdrop-blur-sm transition-all duration-300 hover:scale-105 select-none">
+    <span class="relative flex h-2 w-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+    </span>
     <span>⚡ Loaded in 0.4s | 100/100 Mobile Speed</span>
   </div>
   
-  <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
+  <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
     High-Converting Websites Built <br class="hidden md:block"/> for Kenyan Businesses 🇰🇪
   </h1>
   
-  <p class="mt-4 max-w-2xl text-lg md:text-xl text-gray-600 mx-auto mb-10">
-    Stop losing sales to only Social Media DMs. Get a fast, professional website with direct WhatsApp & M-Pesa checkout.
+  <p class="mt-4 max-w-2xl text-lg md:text-xl text-gray-600 mx-auto mb-12 leading-relaxed">
+    Stop losing sales to slow social media DMs. Get a lightning-fast, professional website integrated with direct WhatsApp routing &amp; automated M-Pesa checkout.
   </p>
   
-  <div class="flex flex-col sm:flex-row justify-center gap-4">
-    <a href="https://wa.me/254798361771" class="w-full sm:w-auto px-8 py-3.5 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 transition">
-      Get a Quote via WhatsApp
+  <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto sm:max-w-none">
+    <a href="https://wa.me/254798361771?text=Hi%20Fredie,%20I'm%20interested%20in%20a%20high-converting%20website." 
+       class="w-full sm:w-auto px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-blue-300 active:translate-y-0 flex items-center justify-center gap-2">
+      <span>Get a Quote via WhatsApp</span>
+      <span>💬</span>
     </a>
-    <a href="#pricing" class="w-full sm:w-auto px-8 py-3.5 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition">
+    <a href="#pricing" 
+       class="w-full sm:w-auto px-8 py-4 border border-gray-250 text-base font-bold rounded-xl text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md active:translate-y-0 flex items-center justify-center">
       View Pricing Tiers
     </a>
   </div>

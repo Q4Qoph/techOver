@@ -9,8 +9,8 @@ interface Props {
 
 const { tier, price, description, features, isPopular = false } = Astro.props;
 ---
-<div class={`rounded-2xl p-8 bg-white border ${isPopular ? 'border-blue-600 shadow-xl relative ring-1 ring-blue-600' : 'border-gray-200 shadow-sm'}`}>
-  {isPopular && <span class="absolute top-0 -translate-y-1/2 bg-blue-600 text-white px-3 py-0.5 rounded-full text-sm font-semibold tracking-wide">Most Popular</span>}
+<div class={`rounded-2xl p-8 bg-white border transition-all duration-300 hover:-translate-y-1.5 ${isPopular ? 'border-blue-600 shadow-xl hover:shadow-2xl relative ring-1 ring-blue-600' : 'border-gray-200 shadow-sm hover:shadow-md'}`}>
+  {isPopular && <span class="absolute top-0 -translate-y-1/2 bg-blue-600 text-white px-3 py-0.5 rounded-full text-sm font-semibold tracking-wide shadow-sm">Most Popular</span>}
   <h3 class="text-xl font-semibold text-gray-900">{tier}</h3>
   <p class="mt-4 flex items-baseline text-4xl font-extrabold text-slate-900">
     KES {price}
@@ -26,4 +26,16 @@ const { tier, price, description, features, isPopular = false } = Astro.props;
       </li>
     ))}
   </ul>
+  <div class="mt-8">
+    <a 
+      href={`https://wa.me/254798361771?text=Hi%20Fredie,%20I'm%20interested%20in%20the%20${encodeURIComponent(tier)}%20package.`}
+      class={`w-full py-3 px-4 rounded-xl text-center font-bold text-sm block transition-all duration-300 ${
+        isPopular 
+          ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-200 hover:shadow-lg hover:shadow-blue-300 hover:-translate-y-0.5 active:translate-y-0' 
+          : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100 hover:border-slate-350 hover:-translate-y-0.5 active:translate-y-0'
+      }`}
+    >
+      Get Started
+    </a>
+  </div>
 </div>
