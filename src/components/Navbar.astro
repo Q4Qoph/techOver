@@ -1,20 +1,65 @@
 ---
+import BrandLogo from './BrandLogo.astro';
+import { whatsappLink } from '../data/contact';
 ---
+
 <header class="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-    <a href="/" class="flex items-center gap-2.5 font-bold text-xl tracking-tight text-slate-900 group">
-      <img src="/techover-logo.png" alt="techover.pro Logo" class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
-      <span>techover<span class="text-blue-600">.pro</span></span>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-3 h-16">
+    <a href="/" class="flex min-w-0 items-center gap-1.5 sm:gap-2.5 font-bold text-lg sm:text-xl tracking-tight text-slate-900 group">
+      <BrandLogo imageClass="h-8 w-auto object-contain sm:h-10" width={80} />
+      <span class="whitespace-nowrap">techover<span class="text-blue-600">.pro</span></span>
     </a>
-    <nav class="hidden md:flex space-x-8">
-      <a href="#how-it-works" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">How It Works</a>
-      <a href="#showcase" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">Showcase</a>
-      <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">Pricing</a>
-      <a href="#faq" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition">FAQ</a>
+
+    <nav class="hidden md:flex space-x-8" aria-label="Main navigation">
+      <a href="#how-it-works" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">How It Works</a>
+      <a href="#showcase" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Showcase</a>
+      <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Pricing</a>
+      <a href="#faq" class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">FAQ</a>
     </nav>
-    <a href="https://wa.me/254798361771?text=Hi%20Fredie,%20I%20need%20a%20free%20web%20audit." 
-       class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 duration-300">
-      Free Web Audit
+
+    <details class="mobile-menu relative md:hidden">
+      <summary class="flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 [&::-webkit-details-marker]:hidden" aria-label="Open site navigation">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </summary>
+      <nav class="absolute right-0 top-full mt-2 grid min-w-52 gap-1 rounded-xl border border-slate-200 bg-white p-2 shadow-xl" aria-label="Mobile navigation">
+        <a href="#how-it-works" class="rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">How It Works</a>
+        <a href="#showcase" class="rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Showcase</a>
+        <a href="#pricing" class="rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Pricing</a>
+        <a href="#faq" class="rounded-lg px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+      </nav>
+    </details>
+
+    <a href={whatsappLink('Hi Fredie, I need a free web audit.')}
+       class="inline-flex shrink-0 items-center justify-center rounded-md bg-green-600 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white shadow-sm transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-md active:translate-y-0">
+      <span class="hidden sm:inline">Free Web Audit</span>
+      <span class="sm:hidden">WhatsApp</span>
     </a>
   </div>
 </header>
+
+<script>
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const menuLink = event.target.closest('.mobile-menu a');
+    menuLink?.closest('details')?.removeAttribute('open');
+  });
+
+  document.querySelector<HTMLDetailsElement>('.mobile-menu')?.addEventListener('toggle', (event) => {
+    const menu = event.currentTarget as HTMLDetailsElement;
+    menu.querySelector('summary')?.setAttribute(
+      'aria-label',
+      menu.open ? 'Close site navigation' : 'Open site navigation',
+    );
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const openMenu = document.querySelector<HTMLDetailsElement>('.mobile-menu[open]');
+    if (!openMenu) return;
+
+    openMenu.removeAttribute('open');
+    openMenu.querySelector('summary')?.focus();
+  });
+</script>

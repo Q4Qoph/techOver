@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/techover-logo.webp';
+
+interface Props {
+  imageClass: string;
+  width: number;
+}
+
+const { imageClass, width } = Astro.props;
+const height = Math.round((width * 1023) / 1030);
+---
+
+<Image src={logo} alt="" width={width} height={height} format="webp" class={imageClass} />

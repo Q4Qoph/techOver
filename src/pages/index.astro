@@ -5,12 +5,13 @@ import Hero from '../components/Hero.astro';
 import ShowcaseSection from '../components/ShowcaseSection.astro';
 import PricingCard from '../components/PricingCard.astro';
 import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
+import BrandLogo from '../components/BrandLogo.astro';
 ---
 
 <BaseLayout title="Fast Web Solutions for Kenyan SMEs">
   <Navbar />
   
-  <main class="flex-grow pt-16">
+  <main id="main-content" tabindex="-1" class="flex-grow pt-16">
     <Hero />
 
     {/* Section A: "How It Works" (3-Step Process) */}
@@ -30,7 +31,7 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
         
         <div class="relative grid md:grid-cols-3 gap-8 md:gap-12">
           {/* Step 1 */}
-          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-md hover:bg-slate-50/80">
+          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-[background-color,box-shadow] duration-300 hover:shadow-md hover:bg-slate-50/80">
             <div class="text-5xl font-black text-blue-600/20 mb-4 select-none">01</div>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Consultation &amp; Discovery (30 Mins)</h3>
             <p class="text-slate-600 text-sm leading-relaxed">
@@ -39,7 +40,7 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
           </div>
           
           {/* Step 2 */}
-          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-md hover:bg-slate-50/80">
+          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-[background-color,box-shadow] duration-300 hover:shadow-md hover:bg-slate-50/80">
             <div class="text-5xl font-black text-blue-600/20 mb-4 select-none">02</div>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Rapid Build (3–5 Days)</h3>
             <p class="text-slate-600 text-sm leading-relaxed">
@@ -48,7 +49,7 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
           </div>
           
           {/* Step 3 */}
-          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-all duration-300 hover:shadow-md hover:bg-slate-50/80">
+          <div class="relative flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 transition-[background-color,box-shadow] duration-300 hover:shadow-md hover:bg-slate-50/80">
             <div class="text-5xl font-black text-blue-600/20 mb-4 select-none">03</div>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Launch &amp; Convert</h3>
             <p class="text-slate-600 text-sm leading-relaxed">
@@ -107,11 +108,11 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
         
         <div class="space-y-4">
           {/* FAQ 1 */}
-          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-all duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
+          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-[box-shadow,border-color] duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
             <summary class="flex justify-between items-center font-bold text-slate-800 p-6 cursor-pointer list-none select-none">
               <span class="pr-4">Do I need a laptop to manage my orders?</span>
               <span class="transition-transform duration-300 group-open:rotate-180 text-blue-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
               </span>
             </summary>
             <div class="px-6 pb-6 text-slate-600 border-t border-slate-100/50 pt-4 leading-relaxed text-sm md:text-base">
@@ -120,24 +121,24 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
           </details>
           
           {/* FAQ 2 */}
-          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-all duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
+          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-[box-shadow,border-color] duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
             <summary class="flex justify-between items-center font-bold text-slate-800 p-6 cursor-pointer list-none select-none">
               <span class="pr-4">What are the recurring costs after building?</span>
               <span class="transition-transform duration-300 group-open:rotate-180 text-blue-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
               </span>
             </summary>
             <div class="px-6 pb-6 text-slate-600 border-t border-slate-100/50 pt-4 leading-relaxed text-sm md:text-base">
-              We keep your recurring costs to the absolute minimum. You only pay for your domain (approx. KES 1,000 to 1,500 per year). We host your Astro site on Cloudflare’s global edge network, which is 100% free and immune to heavy traffic spikes. No expensive monthly hosting plans.
+              Ongoing costs depend on your providers and the services your site needs. Domain registration and payment-provider fees are separate. Some static sites can use Cloudflare’s free tier, subject to current plan limits. We’ll confirm expected costs before launch.
             </div>
           </details>
           
           {/* FAQ 3 */}
-          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-all duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
+          <details class="group border border-slate-200/80 rounded-2xl bg-white transition-[box-shadow,border-color] duration-300 open:shadow-lg open:border-blue-200" name="faq-accordion">
             <summary class="flex justify-between items-center font-bold text-slate-800 p-6 cursor-pointer list-none select-none">
               <span class="pr-4">Can customers pay directly via M-Pesa?</span>
               <span class="transition-transform duration-300 group-open:rotate-180 text-blue-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
               </span>
             </summary>
             <div class="px-6 pb-6 text-slate-600 border-t border-slate-100/50 pt-4 leading-relaxed text-sm md:text-base">
@@ -153,11 +154,11 @@ import WhatsAppFloatingCTA from '../components/WhatsAppFloatingCTA.astro';
   <footer class="bg-slate-900 py-16 text-center text-slate-400 border-t border-slate-800 relative z-10">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex items-center justify-center gap-2 mb-4">
-        <img src="/techover-logo.png" alt="techover.pro Logo" class="h-12 w-auto object-contain" />
+        <BrandLogo imageClass="h-12 w-auto object-contain" width={96} />
         <p class="font-bold text-white text-xl">techover<span class="text-blue-500">.pro</span></p>
       </div>
       <p class="mb-2">📍 Nairobi / Mombasa, Kenya 🇰🇪</p>
-      <p class="mb-8">Built by Fredie | SME Web Solutions | TikTok: @fredie.websolution</p>
+      <p class="mb-8">Built by Fredie | SME Web Solutions | TikTok: <a href="https://www.tiktok.com/@fredie.websolutions" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 hover:text-white transition-colors">@fredie.websolutions<span class="sr-only"> (opens in a new tab)</span></a></p>
       <p class="text-sm text-slate-500">© {new Date().getFullYear()} techover.pro. All rights reserved.</p>
     </div>
   </footer>

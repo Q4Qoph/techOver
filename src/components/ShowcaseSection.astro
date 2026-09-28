@@ -1,11 +1,12 @@
 ---
+import ShowcaseCard from './ShowcaseCard.astro';
+import { showcaseProjects } from '../data/showcaseProjects';
 ---
-<section class="py-24 bg-white text-slate-900 relative overflow-hidden" id="showcase">
+
+<section class="py-24 bg-white text-slate-900 relative overflow-hidden" id="showcase" aria-labelledby="showcase-title">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    
-    {/* Headings */}
     <div class="text-center mb-10">
-      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+      <h2 id="showcase-title" class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight text-balance">
         Grow your business
       </h2>
       <p class="mt-4 text-lg md:text-xl text-slate-550 font-normal max-w-2xl mx-auto">
@@ -13,214 +14,34 @@
       </p>
     </div>
 
-    {/* All 8 Squarespace Pill Category Buttons (Static Placeholders) */}
-    <div class="flex justify-center flex-wrap gap-2 md:gap-3 mb-16 select-none max-w-4xl mx-auto">
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Services
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Online Store
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-900 text-white shadow-sm border border-transparent">
-        Invoicing
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Scheduling
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Donations
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Memberships
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Blog
-      </span>
-      <span class="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-slate-100 text-slate-600 border border-transparent">
-        Portfolio
-      </span>
-    </div>
-
-    {/* Horizontal Slider Viewport with Side Peeking Cards */}
     <div class="relative overflow-visible w-full py-4">
-      <div class="slider-viewport overflow-visible max-w-5xl mx-auto">
+      <div class="slider-viewport overflow-visible max-w-5xl mx-auto" role="region" aria-label="Featured website projects">
         <div class="slider-track flex gap-8 transition-transform duration-500 ease-out motion-reduce:transition-none" id="slider-track">
-          
-          {/* Card 0: FDK Elevators */}
-          <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="0">
-            <div>
-              <div class="mb-6 text-left">
-                <span class="text-xs uppercase tracking-widest text-blue-400 font-bold block mb-1">Corporate &amp; Services</span>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">FDK Elevators</h3>
-                <p class="text-xs md:text-sm text-slate-400 font-light max-w-2xl leading-relaxed">
-                  Industrial engineering and maintenance AMC portal. Features comprehensive service tables, dynamic request forms, and localized SEO keyword mapping.
-                </p>
-              </div>
-
-              {/* Browser mockup */}
-              <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl aspect-[16/9] w-full group">
-                <div class="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
-                  </div>
-                  <div class="bg-slate-950 rounded text-[9px] text-slate-500 px-3 py-0.5 font-mono truncate max-w-[150px] text-center border border-slate-900">
-                    fdkelevators.com
-                  </div>
-                  <div class="w-8"></div>
-                </div>
-                
-                {/* Viewport */}
-                <div class="relative w-full h-[calc(100%-29px)] overflow-hidden bg-slate-950">
-                  <img src="/showcase-fdk.png" alt="FDK Elevators Website Preview" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-102" />
-                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
-                    <a href="https://www.fdkelevators.com/" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-1.5">
-                      <span>Visit Live Site</span>
-                      <span class="text-[10px]">↗</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 1: Zaffy Meat Mart (Default Active Card) */}
-          <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="1">
-            <div>
-              <div class="mb-6 text-left">
-                <span class="text-xs uppercase tracking-widest text-red-400 font-bold block mb-1">E-Commerce &amp; Retail</span>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Zaffy Meat Mart</h3>
-                <p class="text-xs md:text-sm text-slate-400 font-light max-w-2xl leading-relaxed">
-                  Premium butchery catalog and daily specials delivery app in Mombasa. Integrates instant cart totals, local checkout routing, and M-Pesa STK Push checkouts.
-                </p>
-              </div>
-
-              {/* Browser mockup */}
-              <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl aspect-[16/9] w-full group">
-                <div class="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
-                  </div>
-                  <div class="bg-slate-950 rounded text-[9px] text-slate-500 px-3 py-0.5 font-mono truncate max-w-[150px] text-center border border-slate-900">
-                    zaffymeat.co.ke
-                  </div>
-                  <div class="w-8"></div>
-                </div>
-                
-                {/* Viewport */}
-                <div class="relative w-full h-[calc(100%-29px)] overflow-hidden bg-slate-950">
-                  <img src="/showcase-zaffy.png" alt="Zaffy Meat Mart Website Preview" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-102" />
-                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
-                    <a href="https://zaffymeat.techover.pro/" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-1.5">
-                      <span>Visit Live Site</span>
-                      <span class="text-[10px]">↗</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Velora Doors */}
-          <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="2">
-            <div>
-              <div class="mb-6 text-left">
-                <span class="text-xs uppercase tracking-widest text-amber-400 font-bold block mb-1">Luxury Showroom Portfolio</span>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Velora Doors</h3>
-                <p class="text-xs md:text-sm text-slate-400 font-light max-w-2xl leading-relaxed">
-                  Bespoke wood carving and luxury entry door portfolio. Styled with a premium dark-gold aesthetic optimized for architects and high-end developers.
-                </p>
-              </div>
-
-              {/* Browser mockup */}
-              <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl aspect-[16/9] w-full group">
-                <div class="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
-                  </div>
-                  <div class="bg-slate-950 rounded text-[9px] text-slate-500 px-3 py-0.5 font-mono truncate max-w-[150px] text-center border border-slate-900">
-                    veloradoors.com
-                  </div>
-                  <div class="w-8"></div>
-                </div>
-                
-                {/* Viewport */}
-                <div class="relative w-full h-[calc(100%-29px)] overflow-hidden bg-slate-950">
-                  <img src="/showcase-velora.png" alt="Velora Doors Website Preview" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-102" />
-                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
-                    <a href="https://veloradoors.com/" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-1.5">
-                      <span>Visit Live Site</span>
-                      <span class="text-[10px]">↗</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Konastone Autos and Imports */}
-          <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="3">
-            <div>
-              <div class="mb-6 text-left">
-                <span class="text-xs uppercase tracking-widest text-amber-400 font-bold block mb-1">Mombasa, Kenya · Konastone Autos &amp; Imports</span>
-                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Konastone Autos and Imports</h3>
-                <p class="text-xs md:text-sm text-slate-400 font-light max-w-2xl leading-relaxed">
-                  Find quality cars for sale in Mombasa. Browse available cars, compare prices, mileage and vehicle details, then contact our team to arrange a viewing.
-                </p>
-              </div>
-
-              {/* Browser mockup */}
-              <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl aspect-[16/9] w-full group">
-                <div class="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
-                  </div>
-                  <div class="bg-slate-950 rounded text-[9px] text-slate-500 px-3 py-0.5 font-mono truncate max-w-[180px] text-center border border-slate-900">
-                    konastoneautos.co.ke
-                  </div>
-                  <div class="w-8"></div>
-                </div>
-
-                {/* Viewport */}
-                <div class="relative w-full h-[calc(100%-29px)] overflow-hidden bg-slate-950">
-                  <img src="/showcase-konastone.png" alt="Konastone Autos and Imports vehicle listings website preview" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-102" />
-                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
-                    <a href="https://konastoneautos.co.ke/" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-1.5">
-                      <span>Visit Live Site</span>
-                      <span class="text-[10px]">↗</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          {showcaseProjects.map((project, index) => <ShowcaseCard project={project} index={index} />)}
         </div>
       </div>
-      
-      {/* Navigation Controls */}
+
       <div class="flex justify-between items-center mt-12 max-w-sm mx-auto select-none">
-        <button id="prev-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition shadow-sm cursor-pointer" aria-label="Previous Project">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+        <button id="prev-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-[transform,background-color] shadow-sm cursor-pointer" aria-label="Previous project">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        
-        {/* Dot Indicators */}
-        <div class="flex gap-2.5" id="dots-container">
-          <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="0" aria-label="Project 1"></button>
-          <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="1" aria-label="Project 2"></button>
-          <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="2" aria-label="Project 3"></button>
-          <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="3" aria-label="Project 4"></button>
+
+        <div class="flex gap-2.5" id="dots-container" role="group" aria-label="Choose a project">
+          {showcaseProjects.map((project, index) => (
+            <button
+              class:list={[
+                'dot h-2.5 rounded-full transition-[width,background-color] duration-300 cursor-pointer',
+                index === 1 ? 'bg-slate-900 w-6' : 'bg-slate-200 w-2.5',
+              ]}
+              data-slide={index}
+              aria-label={`Show ${project.title}`}
+              aria-pressed={index === 1 ? 'true' : 'false'}
+            ></button>
+          ))}
         </div>
-        
-        <button id="next-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition shadow-sm cursor-pointer" aria-label="Next Project">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+
+        <button id="next-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-[transform,background-color] shadow-sm cursor-pointer" aria-label="Next project">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
@@ -235,19 +56,19 @@
 
     const track = document.getElementById('slider-track');
     const showcase = document.getElementById('showcase');
-    const originalCards = track
+    const originalSlides = track
       ? Array.from(track.querySelectorAll<HTMLElement>('.showcase-card'))
-        .filter((card) => card.dataset.sliderClone !== 'true')
+        .filter((slide) => slide.dataset.sliderClone !== 'true')
       : [];
     const dots = showcase?.querySelectorAll<HTMLButtonElement>('.dot') ?? [];
     const prevBtn = showcase?.querySelector<HTMLButtonElement>('#prev-btn');
     const nextBtn = showcase?.querySelector<HTMLButtonElement>('#next-btn');
 
-    if (!track || originalCards.length < 2) return;
+    if (!track || originalSlides.length < 2) return;
 
-    const cardCount = originalCards.length;
-    const firstClone = originalCards[0].cloneNode(true) as HTMLElement;
-    const lastClone = originalCards[cardCount - 1].cloneNode(true) as HTMLElement;
+    const slideCount = originalSlides.length;
+    const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
+    const lastClone = originalSlides[slideCount - 1].cloneNode(true) as HTMLElement;
 
     [firstClone, lastClone].forEach((clone) => {
       clone.dataset.sliderClone = 'true';
@@ -260,16 +81,16 @@
 
     const slides = Array.from(track.children) as HTMLElement[];
     const viewport = track.parentElement;
-    let currentPosition = 2; // Start on the second real project.
+    let currentPosition = Math.min(2, slideCount);
     let isTransitioning = false;
     let transitionTimer: number | undefined;
 
     function logicalIndex() {
-      return (currentPosition - 1 + cardCount) % cardCount;
+      return (currentPosition - 1 + slideCount) % slideCount;
     }
 
     function updateTransform() {
-      if (!viewport) return;
+      if (!viewport || !track) return;
 
       const viewportWidth = viewport.clientWidth;
       const cardWidth = slides[0].clientWidth;
@@ -280,28 +101,20 @@
 
     function updateIndicators() {
       const activeIndex = logicalIndex();
-      dots.forEach((dot, idx) => {
-        const isActive = idx === activeIndex;
-        if (isActive) {
-          dot.classList.remove('bg-slate-200', 'w-2.5');
-          dot.classList.add('bg-slate-900', 'w-6');
-        } else {
-          dot.classList.remove('bg-slate-900', 'w-6');
-          dot.classList.add('bg-slate-200', 'w-2.5');
-        }
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle('bg-slate-900', isActive);
+        dot.classList.toggle('w-6', isActive);
+        dot.classList.toggle('bg-slate-200', !isActive);
+        dot.classList.toggle('w-2.5', !isActive);
         dot.setAttribute('aria-pressed', String(isActive));
       });
     }
 
     function updateEmphasis() {
-      slides.forEach((slide, idx) => {
-        if (idx === currentPosition) {
-          slide.style.opacity = '1';
-          slide.style.transform = 'scale(1)';
-        } else {
-          slide.style.opacity = '0.4';
-          slide.style.transform = 'scale(0.95)';
-        }
+      slides.forEach((slide, index) => {
+        slide.style.opacity = index === currentPosition ? '1' : '0.4';
+        slide.style.transform = index === currentPosition ? 'scale(1)' : 'scale(0.95)';
       });
     }
 
@@ -312,7 +125,7 @@
     }
 
     function finishTransition() {
-      if (!isTransitioning) return;
+      if (!isTransitioning || !track) return;
 
       isTransitioning = false;
       if (transitionTimer !== undefined) {
@@ -321,8 +134,8 @@
       }
 
       let snapToPosition: number | undefined;
-      if (currentPosition === 0) snapToPosition = cardCount;
-      if (currentPosition === cardCount + 1) snapToPosition = 1;
+      if (currentPosition === 0) snapToPosition = slideCount;
+      if (currentPosition === slideCount + 1) snapToPosition = 1;
 
       if (snapToPosition !== undefined) {
         currentPosition = snapToPosition;
@@ -343,7 +156,6 @@
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         finishTransition();
       } else {
-        // Fallback in case a browser does not emit transitionend.
         transitionTimer = window.setTimeout(finishTransition, 650);
       }
     }
@@ -359,13 +171,13 @@
 
       const dot = event.currentTarget as HTMLButtonElement;
       const targetIndex = Number.parseInt(dot.dataset.slide ?? '', 10);
-      if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex >= cardCount) return;
+      if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex >= slideCount) return;
 
       const activeIndex = logicalIndex();
       if (targetIndex === activeIndex) return;
-      if (activeIndex === cardCount - 1 && targetIndex === 0) {
-        moveTo(cardCount + 1);
-      } else if (activeIndex === 0 && targetIndex === cardCount - 1) {
+      if (activeIndex === slideCount - 1 && targetIndex === 0) {
+        moveTo(slideCount + 1);
+      } else if (activeIndex === 0 && targetIndex === slideCount - 1) {
         moveTo(0);
       } else {
         moveTo(targetIndex + 1);
@@ -387,10 +199,10 @@
 
     function handleTouchEnd(event: TouchEvent) {
       const touchEndX = event.changedTouches[0]?.screenX ?? 0;
-      const diffX = touchEndX - touchStartX;
-      if (Math.abs(diffX) <= 50) return;
+      const difference = touchEndX - touchStartX;
+      if (Math.abs(difference) <= 50) return;
 
-      if (diffX < 0) handleNext();
+      if (difference < 0) handleNext();
       else handlePrevious();
     }
 

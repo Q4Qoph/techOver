@@ -1,43 +1,35 @@
-# Astro Starter Kit: Minimal
+# techover.pro
+
+Marketing site for SME web development services, built with Astro and Tailwind CSS 4. It includes service/pricing sections, a data-driven project showcase, WhatsApp contact links, and a TikTok profile link in the footer.
+
+## Requirements
+
+- Node.js 22.12 or newer
+- pnpm 11.5.2 (see `packageManager` in `package.json`)
+
+## Development
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm install
+pnpm dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Astro serves the site at `http://localhost:4321`. Run `pnpm check` for Astro and TypeScript diagnostics, `pnpm test:e2e` to build the production site and run browser smoke tests, and `pnpm build` to create the production site in `dist/`. Use `pnpm preview` to inspect a production build locally.
 
-## 🚀 Project Structure
+## Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/pages/index.astro` composes the single-page site.
+- `src/components/` contains reusable page sections and cards.
+- `src/data/` holds showcase project and contact data.
+- `src/assets/` contains images processed by Astro during the build.
+- `public/` contains static files copied without transformation.
+- `tests/` contains Playwright browser smoke tests.
+- `wrangler.json` configures Cloudflare Workers static assets from `dist/`.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Editing the Showcase
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Add or update project entries in `src/data/showcaseProjects.ts`. Store local showcase images under `src/assets/showcase/`; Astro generates responsive AVIF/WebP variants for the cards. Keep descriptive alt text and a valid live-site URL for each project.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Deployment
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+GitHub is connected to Cloudflare Workers for deployment. A successful `pnpm build` must produce `dist/`, which Wrangler serves as static assets. Keep runtime requirements compatible with the static asset configuration.
