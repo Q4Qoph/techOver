@@ -44,7 +44,7 @@
     {/* Horizontal Slider Viewport with Side Peeking Cards */}
     <div class="relative overflow-visible w-full py-4">
       <div class="slider-viewport overflow-visible max-w-5xl mx-auto">
-        <div class="slider-track flex gap-8 transition-transform duration-500 ease-out" id="slider-track">
+        <div class="slider-track flex gap-8 transition-transform duration-500 ease-out motion-reduce:transition-none" id="slider-track">
           
           {/* Card 0: FDK Elevators */}
           <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="0">
@@ -163,6 +163,45 @@
             </div>
           </div>
 
+          {/* Card 3: Konastone Autos and Imports */}
+          <div class="showcase-card w-[88vw] md:w-[760px] shrink-0 bg-slate-950 text-white rounded-[32px] p-6 md:p-10 border border-slate-800 shadow-2xl flex flex-col justify-between transition-all duration-500 ease-in-out transform" data-index="3">
+            <div>
+              <div class="mb-6 text-left">
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-bold block mb-1">Mombasa, Kenya · Konastone Autos &amp; Imports</span>
+                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Konastone Autos and Imports</h3>
+                <p class="text-xs md:text-sm text-slate-400 font-light max-w-2xl leading-relaxed">
+                  Find quality cars for sale in Mombasa. Browse available cars, compare prices, mileage and vehicle details, then contact our team to arrange a viewing.
+                </p>
+              </div>
+
+              {/* Browser mockup */}
+              <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl aspect-[16/9] w-full group">
+                <div class="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+                  </div>
+                  <div class="bg-slate-950 rounded text-[9px] text-slate-500 px-3 py-0.5 font-mono truncate max-w-[180px] text-center border border-slate-900">
+                    konastoneautos.co.ke
+                  </div>
+                  <div class="w-8"></div>
+                </div>
+
+                {/* Viewport */}
+                <div class="relative w-full h-[calc(100%-29px)] overflow-hidden bg-slate-950">
+                  <img src="/showcase-konastone.png" alt="Konastone Autos and Imports vehicle listings website preview" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-102" />
+                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
+                    <a href="https://konastoneautos.co.ke/" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-white text-slate-950 font-bold text-xs rounded-full shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-1.5">
+                      <span>Visit Live Site</span>
+                      <span class="text-[10px]">↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       
@@ -177,6 +216,7 @@
           <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="0" aria-label="Project 1"></button>
           <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="1" aria-label="Project 2"></button>
           <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="2" aria-label="Project 3"></button>
+          <button class="dot w-2.5 h-2.5 rounded-full bg-slate-200 transition-all duration-300 cursor-pointer" data-slide="3" aria-label="Project 4"></button>
         </div>
         
         <button id="next-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition shadow-sm cursor-pointer" aria-label="Next Project">
@@ -188,109 +228,213 @@
 </section>
 
 <script>
+  let cleanupSlider: (() => void) | undefined;
+
   function setupSlider() {
+    cleanupSlider?.();
+
     const track = document.getElementById('slider-track');
-    const cards = document.querySelectorAll('.showcase-card');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+    const showcase = document.getElementById('showcase');
+    const originalCards = track
+      ? Array.from(track.querySelectorAll<HTMLElement>('.showcase-card'))
+        .filter((card) => card.dataset.sliderClone !== 'true')
+      : [];
+    const dots = showcase?.querySelectorAll<HTMLButtonElement>('.dot') ?? [];
+    const prevBtn = showcase?.querySelector<HTMLButtonElement>('#prev-btn');
+    const nextBtn = showcase?.querySelector<HTMLButtonElement>('#next-btn');
 
-    if (!track || cards.length === 0) return;
+    if (!track || originalCards.length < 2) return;
 
-    // Default to the middle card (index 1) on load
-    let currentIndex = 1;
-    const cardCount = cards.length;
-    const gap = 32; // match gap-8 (32px)
+    const cardCount = originalCards.length;
+    const firstClone = originalCards[0].cloneNode(true) as HTMLElement;
+    const lastClone = originalCards[cardCount - 1].cloneNode(true) as HTMLElement;
 
-    function updateSlider() {
-      const viewportWidth = track.parentElement.clientWidth;
-      const cardWidth = cards[0].clientWidth;
-      
-      // Calculate translation offset to center the active card
-      const offset = (viewportWidth - cardWidth) / 2 - currentIndex * (cardWidth + gap);
+    [firstClone, lastClone].forEach((clone) => {
+      clone.dataset.sliderClone = 'true';
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
+    });
+
+    track.prepend(lastClone);
+    track.append(firstClone);
+
+    const slides = Array.from(track.children) as HTMLElement[];
+    const viewport = track.parentElement;
+    let currentPosition = 2; // Start on the second real project.
+    let isTransitioning = false;
+    let transitionTimer: number | undefined;
+
+    function logicalIndex() {
+      return (currentPosition - 1 + cardCount) % cardCount;
+    }
+
+    function updateTransform() {
+      if (!viewport) return;
+
+      const viewportWidth = viewport.clientWidth;
+      const cardWidth = slides[0].clientWidth;
+      const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+      const offset = (viewportWidth - cardWidth) / 2 - currentPosition * (cardWidth + gap);
       track.style.transform = `translateX(${offset}px)`;
+    }
 
-      // Update dots
+    function updateIndicators() {
+      const activeIndex = logicalIndex();
       dots.forEach((dot, idx) => {
-        if (idx === currentIndex) {
-          dot.classList.remove('bg-slate-200');
+        const isActive = idx === activeIndex;
+        if (isActive) {
+          dot.classList.remove('bg-slate-200', 'w-2.5');
           dot.classList.add('bg-slate-900', 'w-6');
         } else {
           dot.classList.remove('bg-slate-900', 'w-6');
-          dot.classList.add('bg-slate-200');
+          dot.classList.add('bg-slate-200', 'w-2.5');
         }
+        dot.setAttribute('aria-pressed', String(isActive));
       });
+    }
 
-      // Update card visual emphasis (scale & opacity of center card)
-      cards.forEach((card, idx) => {
-        if (idx === currentIndex) {
-          card.style.opacity = '1';
-          card.style.transform = 'scale(1)';
+    function updateEmphasis() {
+      slides.forEach((slide, idx) => {
+        if (idx === currentPosition) {
+          slide.style.opacity = '1';
+          slide.style.transform = 'scale(1)';
         } else {
-          card.style.opacity = '0.4';
-          card.style.transform = 'scale(0.95)';
+          slide.style.opacity = '0.4';
+          slide.style.transform = 'scale(0.95)';
         }
       });
     }
 
-    // Dot indicators click
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        currentIndex = parseInt(dot.getAttribute('data-slide') || '1');
+    function updateSlider() {
+      updateTransform();
+      updateIndicators();
+      updateEmphasis();
+    }
+
+    function finishTransition() {
+      if (!isTransitioning) return;
+
+      isTransitioning = false;
+      if (transitionTimer !== undefined) {
+        window.clearTimeout(transitionTimer);
+        transitionTimer = undefined;
+      }
+
+      let snapToPosition: number | undefined;
+      if (currentPosition === 0) snapToPosition = cardCount;
+      if (currentPosition === cardCount + 1) snapToPosition = 1;
+
+      if (snapToPosition !== undefined) {
+        currentPosition = snapToPosition;
+        track.style.transition = 'none';
         updateSlider();
-      });
-    });
-
-    // Arrow buttons click with infinite circular looping
-    prevBtn?.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + cardCount) % cardCount;
-      updateSlider();
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % cardCount;
-      updateSlider();
-    });
-
-    // Touch events for mobile swipe gestures
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    track.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    track.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const swipeThreshold = 50;
-      const diffX = touchEndX - touchStartX;
-      
-      if (Math.abs(diffX) > swipeThreshold) {
-        if (diffX < 0) {
-          // Swipe left -> Next card
-          currentIndex = (currentIndex + 1) % cardCount;
-        } else {
-          // Swipe right -> Prev card
-          currentIndex = (currentIndex - 1 + cardCount) % cardCount;
-        }
-        updateSlider();
+        track.getBoundingClientRect();
+        track.style.transition = '';
       }
     }
 
-    // Handle window resize dynamically to adjust centering offset
-    window.addEventListener('resize', updateSlider);
+    function moveTo(position: number) {
+      if (isTransitioning) return;
 
-    // Initial positioning
+      currentPosition = position;
+      isTransitioning = true;
+      updateSlider();
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        finishTransition();
+      } else {
+        // Fallback in case a browser does not emit transitionend.
+        transitionTimer = window.setTimeout(finishTransition, 650);
+      }
+    }
+
+    function handleTransitionEnd(event: TransitionEvent) {
+      if (event.target === track && event.propertyName === 'transform') {
+        finishTransition();
+      }
+    }
+
+    function handleDotClick(event: MouseEvent) {
+      if (isTransitioning) return;
+
+      const dot = event.currentTarget as HTMLButtonElement;
+      const targetIndex = Number.parseInt(dot.dataset.slide ?? '', 10);
+      if (!Number.isInteger(targetIndex) || targetIndex < 0 || targetIndex >= cardCount) return;
+
+      const activeIndex = logicalIndex();
+      if (targetIndex === activeIndex) return;
+      if (activeIndex === cardCount - 1 && targetIndex === 0) {
+        moveTo(cardCount + 1);
+      } else if (activeIndex === 0 && targetIndex === cardCount - 1) {
+        moveTo(0);
+      } else {
+        moveTo(targetIndex + 1);
+      }
+    }
+
+    function handleNext() {
+      moveTo(currentPosition + 1);
+    }
+
+    function handlePrevious() {
+      moveTo(currentPosition - 1);
+    }
+
+    let touchStartX = 0;
+    function handleTouchStart(event: TouchEvent) {
+      touchStartX = event.changedTouches[0]?.screenX ?? 0;
+    }
+
+    function handleTouchEnd(event: TouchEvent) {
+      const touchEndX = event.changedTouches[0]?.screenX ?? 0;
+      const diffX = touchEndX - touchStartX;
+      if (Math.abs(diffX) <= 50) return;
+
+      if (diffX < 0) handleNext();
+      else handlePrevious();
+    }
+
+    function handleResize() {
+      updateTransform();
+    }
+
+    track.addEventListener('transitionend', handleTransitionEnd);
+    track.addEventListener('touchstart', handleTouchStart, { passive: true });
+    track.addEventListener('touchend', handleTouchEnd, { passive: true });
+    dots.forEach((dot) => dot.addEventListener('click', handleDotClick));
+    prevBtn?.addEventListener('click', handlePrevious);
+    nextBtn?.addEventListener('click', handleNext);
+    window.addEventListener('resize', handleResize);
+
+    track.style.transition = 'none';
     updateSlider();
+    track.getBoundingClientRect();
+    window.requestAnimationFrame(() => {
+      track.style.transition = '';
+    });
+
+    const cleanup = () => {
+      if (transitionTimer !== undefined) window.clearTimeout(transitionTimer);
+      track.removeEventListener('transitionend', handleTransitionEnd);
+      track.removeEventListener('touchstart', handleTouchStart);
+      track.removeEventListener('touchend', handleTouchEnd);
+      dots.forEach((dot) => dot.removeEventListener('click', handleDotClick));
+      prevBtn?.removeEventListener('click', handlePrevious);
+      nextBtn?.removeEventListener('click', handleNext);
+      window.removeEventListener('resize', handleResize);
+      firstClone.remove();
+      lastClone.remove();
+      if (cleanupSlider === cleanup) cleanupSlider = undefined;
+    };
+
+    cleanupSlider = cleanup;
   }
 
-  // Setup on startup
-  setupSlider();
+  function cleanupBeforeSwap() {
+    cleanupSlider?.();
+  }
 
-  // Astro page transitions support
+  setupSlider();
+  document.addEventListener('astro:before-swap', cleanupBeforeSwap);
   document.addEventListener('astro:after-swap', setupSlider);
 </script>
