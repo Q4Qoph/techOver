@@ -40,6 +40,11 @@ import { showcaseProjects } from '../data/showcaseProjects';
           ))}
         </div>
 
+        <button id="autoplay-toggle" class="w-10 h-10 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 transition-colors shadow-sm cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" aria-label="Pause automatic slide rotation" title="Pause automatic slide rotation">
+          <svg data-icon="pause" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" /></svg>
+          <svg data-icon="play" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        </button>
+
         <button id="next-btn" class="w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-800 flex items-center justify-center hover:bg-slate-50 active:scale-95 transition-[transform,background-color] shadow-sm cursor-pointer" aria-label="Next project">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -63,9 +68,11 @@ import { showcaseProjects } from '../data/showcaseProjects';
     const dots = showcase?.querySelectorAll<HTMLButtonElement>('.dot') ?? [];
     const prevBtn = showcase?.querySelector<HTMLButtonElement>('#prev-btn');
     const nextBtn = showcase?.querySelector<HTMLButtonElement>('#next-btn');
+    const autoplayToggle = showcase?.querySelector<HTMLButtonElement>('#autoplay-toggle');
 
-    if (!track || originalSlides.length < 2) return;
+    if (!track || !showcase || originalSlides.length < 2) return;
 
+    const autoplayDelayMs = 7000;
     const slideCount = originalSlides.length;
     const firstClone = originalSlides[0].cloneNode(true) as HTMLElement;
     const lastClone = originalSlides[slideCount - 1].cloneNode(true) as HTMLElement;
@@ -84,6 +91,62 @@ import { showcaseProjects } from '../data/showcaseProjects';
     let currentPosition = Math.min(2, slideCount);
     let isTransitioning = false;
     let transitionTimer: number | undefined;
+    let autoplayTimer: number | undefined;
+    let isAutoPlaying = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isHovered = false;
+
+    function scheduleAutoAdvance() {
+      if (autoplayTimer !== undefined) {
+        window.clearTimeout(autoplayTimer);
+        autoplayTimer = undefined;
+      }
+
+      if (!isAutoPlaying || isHovered || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      autoplayTimer = window.setTimeout(handleNext, autoplayDelayMs);
+    }
+
+    function updateAutoplayControl() {
+      if (!autoplayToggle) return;
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const label = reducedMotion
+        ? 'Automatic slide rotation disabled by reduced motion'
+        : isAutoPlaying
+          ? 'Pause automatic slide rotation'
+          : 'Resume automatic slide rotation';
+
+      autoplayToggle.disabled = reducedMotion;
+      autoplayToggle.setAttribute('aria-label', label);
+      autoplayToggle.title = label;
+      autoplayToggle.querySelector('[data-icon="pause"]')?.classList.toggle('hidden', !isAutoPlaying);
+      autoplayToggle.querySelector('[data-icon="play"]')?.classList.toggle('hidden', isAutoPlaying);
+    }
+
+    function handleAutoplayToggle() {
+      isAutoPlaying = !isAutoPlaying;
+      updateAutoplayControl();
+      scheduleAutoAdvance();
+    }
+
+    function handlePointerEnter() {
+      isHovered = true;
+      scheduleAutoAdvance();
+    }
+
+    function handlePointerLeave() {
+      isHovered = false;
+      scheduleAutoAdvance();
+    }
+
+    function handleVisibilityChange() {
+      scheduleAutoAdvance();
+    }
+
+    function handleMotionPreferenceChange() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) isAutoPlaying = false;
+      updateAutoplayControl();
+      scheduleAutoAdvance();
+    }
 
     function logicalIndex() {
       return (currentPosition - 1 + slideCount) % slideCount;
@@ -152,6 +215,7 @@ import { showcaseProjects } from '../data/showcaseProjects';
       currentPosition = position;
       isTransitioning = true;
       updateSlider();
+      scheduleAutoAdvance();
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         finishTransition();
@@ -210,14 +274,23 @@ import { showcaseProjects } from '../data/showcaseProjects';
       updateTransform();
     }
 
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     track.addEventListener('transitionend', handleTransitionEnd);
     track.addEventListener('touchstart', handleTouchStart, { passive: true });
     track.addEventListener('touchend', handleTouchEnd, { passive: true });
     dots.forEach((dot) => dot.addEventListener('click', handleDotClick));
     prevBtn?.addEventListener('click', handlePrevious);
     nextBtn?.addEventListener('click', handleNext);
+    autoplayToggle?.addEventListener('click', handleAutoplayToggle);
+    showcase.addEventListener('pointerenter', handlePointerEnter);
+    showcase.addEventListener('pointerleave', handlePointerLeave);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    motionPreference.addEventListener('change', handleMotionPreferenceChange);
     window.addEventListener('resize', handleResize);
 
+    updateAutoplayControl();
+    scheduleAutoAdvance();
     track.style.transition = 'none';
     updateSlider();
     track.getBoundingClientRect();
@@ -233,7 +306,13 @@ import { showcaseProjects } from '../data/showcaseProjects';
       dots.forEach((dot) => dot.removeEventListener('click', handleDotClick));
       prevBtn?.removeEventListener('click', handlePrevious);
       nextBtn?.removeEventListener('click', handleNext);
+      autoplayToggle?.removeEventListener('click', handleAutoplayToggle);
+      showcase.removeEventListener('pointerenter', handlePointerEnter);
+      showcase.removeEventListener('pointerleave', handlePointerLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      motionPreference.removeEventListener('change', handleMotionPreferenceChange);
       window.removeEventListener('resize', handleResize);
+      if (autoplayTimer !== undefined) window.clearTimeout(autoplayTimer);
       firstClone.remove();
       lastClone.remove();
       if (cleanupSlider === cleanup) cleanupSlider = undefined;
