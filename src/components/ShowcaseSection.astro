@@ -16,7 +16,7 @@ import { showcaseProjects } from '../data/showcaseProjects';
 
     <div class="relative overflow-visible w-full py-4">
       <div class="slider-viewport overflow-visible max-w-5xl mx-auto" role="region" aria-label="Featured website projects">
-        <div class="slider-track flex gap-8 transition-transform duration-500 ease-out motion-reduce:transition-none" id="slider-track">
+        <div class="slider-track flex items-start md:items-stretch gap-8 transition-transform duration-500 ease-out motion-reduce:transition-none" id="slider-track">
           {showcaseProjects.map((project, index) => <ShowcaseCard project={project} index={index} />)}
         </div>
       </div>
