@@ -36,7 +36,7 @@ test('showcase wraps from its first project to the last project', async ({ page 
   await expect(dots.nth(3)).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('showcase auto-advances after seven seconds and pauses on hover', async ({ page }) => {
+test('showcase auto-advances every seven seconds, including while hovered', async ({ page }) => {
   await page.clock.install();
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
@@ -47,10 +47,6 @@ test('showcase auto-advances after seven seconds and pauses on hover', async ({ 
   await expect(dots.nth(2)).toHaveAttribute('aria-pressed', 'true');
 
   await page.locator('#showcase').hover();
-  await page.clock.fastForward(14000);
-  await expect(dots.nth(2)).toHaveAttribute('aria-pressed', 'true');
-
-  await page.mouse.move(0, 0);
   await page.clock.fastForward(7000);
   await expect(dots.nth(3)).toHaveAttribute('aria-pressed', 'true');
 });

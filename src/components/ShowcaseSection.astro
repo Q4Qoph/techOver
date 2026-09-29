@@ -86,7 +86,6 @@ import { showcaseProjects } from '../data/showcaseProjects';
     let transitionTimer: number | undefined;
     let autoplayTimer: number | undefined;
     let isAutoPlaying = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let isHovered = false;
 
     function scheduleAutoAdvance() {
       if (autoplayTimer !== undefined) {
@@ -94,18 +93,8 @@ import { showcaseProjects } from '../data/showcaseProjects';
         autoplayTimer = undefined;
       }
 
-      if (!isAutoPlaying || isHovered || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!isAutoPlaying || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       autoplayTimer = window.setTimeout(handleNext, autoplayDelayMs);
-    }
-
-    function handlePointerEnter() {
-      isHovered = true;
-      scheduleAutoAdvance();
-    }
-
-    function handlePointerLeave() {
-      isHovered = false;
-      scheduleAutoAdvance();
     }
 
     function handleVisibilityChange() {
@@ -251,8 +240,6 @@ import { showcaseProjects } from '../data/showcaseProjects';
     dots.forEach((dot) => dot.addEventListener('click', handleDotClick));
     prevBtn?.addEventListener('click', handlePrevious);
     nextBtn?.addEventListener('click', handleNext);
-    showcase.addEventListener('pointerenter', handlePointerEnter);
-    showcase.addEventListener('pointerleave', handlePointerLeave);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     motionPreference.addEventListener('change', handleMotionPreferenceChange);
     window.addEventListener('resize', handleResize);
@@ -273,8 +260,6 @@ import { showcaseProjects } from '../data/showcaseProjects';
       dots.forEach((dot) => dot.removeEventListener('click', handleDotClick));
       prevBtn?.removeEventListener('click', handlePrevious);
       nextBtn?.removeEventListener('click', handleNext);
-      showcase.removeEventListener('pointerenter', handlePointerEnter);
-      showcase.removeEventListener('pointerleave', handlePointerLeave);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       motionPreference.removeEventListener('change', handleMotionPreferenceChange);
       window.removeEventListener('resize', handleResize);
